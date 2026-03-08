@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BingBang — Mis Puntos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:        #F0F4FF;
+      --surface:   #FFFFFF;
+      --surface2:  #F7F9FF;
+      --border:    rgba(99,102,241,.13);
+      --accent1:   #6366F1;
+      --accent2:   #8B5CF6;
+      --accent3:   #A78BFA;
+      --teal:      #06B6D4;
+      --text:      #1E1B4B;
+      --muted:     rgba(30,27,75,.45);
+      --glow:      rgba(99,102,241,.2);
+      --shadow:    0 4px 24px rgba(99,102,241,.12);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      min-height:100vh;
+      background:var(--bg);
+      font-family:'Outfit',sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    body::before {
+      content:''; position:fixed; inset:0;
+      background:
+        radial-gradient(ellipse 60% 50% at 10% 0%,   rgba(99,102,241,.08) 0%,transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 100%, rgba(139,92,246,.07) 0%,transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 10%,  rgba(6,182,212,.06)  0%,transparent 50%);
+      pointer-events:none; z-index:0;
+    }
+
+    .container {
+      position:relative; z-index:1;
+      max-width:460px; margin:0 auto;
+      padding:2.5rem 1.5rem 4rem;
+      min-height:100vh;
+      display:flex; flex-direction:column; align-items:center;
+    }
+
+    /* ── Header ── */
+    .header { text-align:center; margin-bottom:2rem; animation:fadeDown .6s ease both; }
+
+    .logo-wrap { margin:0 auto 1.2rem; }
+
+    .logo-box {
+      display:inline-flex; align-items:center; gap:.6rem;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      border-radius:18px; padding:.7rem 1.3rem;
+      box-shadow:0 8px 32px var(--glow), 0 0 0 1px rgba(99,102,241,.2);
+    }
+
+    .logo-icon {
+      width:38px; height:38px; border-radius:10px;
+      background:rgba(255,255,255,.22);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.3rem;
+    }
+
+    .logo-text {
+      font-family:'Syne',sans-serif;
+      font-size:1.35rem; font-weight:800;
+      color:#fff; letter-spacing:-.3px;
+    }
+
+    .logo-dot {
+      width:8px; height:8px; border-radius:50%;
+      background:var(--teal);
+      display:inline-block; margin-left:.3rem;
+      animation:pulse 2s infinite;
+    }
+
+    .header h1 {
+      font-family:'Syne',sans-serif; font-size:1.85rem; font-weight:800;
+      color:var(--text); margin-bottom:.35rem;
+    }
+    .header h1 span {
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .header p { font-size:.88rem; color:var(--muted); font-weight:400; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display:flex; gap:.4rem;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:16px; padding:.35rem; margin-bottom:1.2rem; width:100%;
+      box-shadow:var(--shadow);
+      animation:fadeUp .6s .1s ease both;
+    }
+    .tab {
+      flex:1; padding:.55rem .3rem; border:none; border-radius:12px;
+      background:transparent; color:var(--muted);
+      font-family:'Outfit',sans-serif; font-size:.82rem; font-weight:600;
+      cursor:pointer; transition:all .22s;
+    }
+    .tab.active {
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      color:#fff; box-shadow:0 4px 14px var(--glow);
+    }
+
+    /* ── Card ── */
+    .card {
+      width:100%; background:var(--surface);
+      border:1px solid var(--border); border-radius:22px;
+      padding:1.75rem; box-shadow:var(--shadow);
+      animation:fadeUp .6s .15s ease both;
+    }
+    .panel { display:none; }
+    .panel.active { display:block; }
+
+    .field-label {
+      font-size:.72rem; text-transform:uppercase;
+      letter-spacing:1.8px; color:var(--accent1);
+      font-weight:700; margin-bottom:.6rem;
+    }
+    .input-wrap { position:relative; margin-bottom:1.3rem; }
+    .input-icon {
+      position:absolute; left:1rem; top:50%;
+      transform:translateY(-50%); font-size:1rem; pointer-events:none;
+    }
+    input[type="text"] {
+      width:100%; padding:.85rem 1rem .85rem 2.7rem;
+      background:var(--surface2); border:1.5px solid var(--border);
+      border-radius:13px; color:var(--text);
+      font-family:'Outfit',sans-serif; font-size:.95rem; font-weight:500;
+      outline:none; transition:border-color .2s,background .2s;
+    }
+    input::placeholder { color:rgba(30,27,75,.22); }
+    input:focus {
+      border-color:var(--accent1);
+      background:#fff;
+      box-shadow:0 0 0 3px rgba(99,102,241,.1);
+    }
+
+    /* ── Button ── */
+    .btn {
+      width:100%; padding:.95rem;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      border:none; border-radius:13px; color:#fff;
+      font-family:'Outfit',sans-serif; font-size:.95rem; font-weight:700;
+      cursor:pointer; letter-spacing:.3px;
+      transition:transform .18s,box-shadow .18s;
+      box-shadow:0 4px 20px var(--glow);
+    }
+    .btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px var(--glow); }
+    .btn:active { transform:translateY(0); }
+    .btn:disabled { opacity:.55; cursor:not-allowed; transform:none; }
+    .btn .spinner {
+      display:none; width:18px; height:18px;
+      border:2.5px solid rgba(255,255,255,.35);
+      border-top-color:#fff; border-radius:50%;
+      animation:spin .7s linear infinite; margin:0 auto;
+    }
+    .btn.loading .btn-text { display:none; }
+    .btn.loading .spinner { display:block; }
+
+    /* ── Result ── */
+    #result { width:100%; margin-top:1.5rem; }
+
+    .result-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
+      animation:fadeUp .5s ease both;
+    }
+
+    .result-top {
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      padding:1.6rem;
+    }
+
+    .result-badge {
+      display:inline-flex; align-items:center; gap:.4rem;
+      background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.3);
+      border-radius:20px; padding:.25rem .85rem;
+      font-size:.7rem; color:#fff;
+      font-weight:700; letter-spacing:1px;
+      text-transform:uppercase; margin-bottom:.9rem;
+    }
+
+    .result-name {
+      font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:800;
+      color:#fff; line-height:1.1; margin-bottom:.3rem;
+    }
+    .result-phone { font-size:.85rem; color:rgba(255,255,255,.7); }
+
+    .result-body { padding:1.5rem; }
+
+    .points-block {
+      display:flex; align-items:center; justify-content:space-between;
+      background:linear-gradient(135deg,rgba(99,102,241,.06),rgba(139,92,246,.04));
+      border:1.5px solid var(--border); border-radius:16px;
+      padding:1.2rem 1.35rem; margin-bottom:1rem;
+    }
+    .pts-label { font-size:.7rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:.2rem; }
+    .pts-value {
+      font-family:'Syne',sans-serif; font-size:2.6rem; font-weight:800;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1;
+    }
+    .pts-unit { font-size:.78rem; color:var(--muted); margin-top:.25rem; }
+    .points-icon {
+      width:52px; height:52px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      border-radius:16px; display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem; box-shadow:0 4px 16px var(--glow);
+    }
+
+    .stats-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1.25rem; }
+    .stat-box {
+      background:var(--surface2); border:1px solid var(--border);
+      border-radius:14px; padding:.9rem;
+      display:flex; align-items:center; gap:.7rem;
+    }
+    .stat-icon-wrap {
+      width:38px; height:38px; border-radius:11px;
+      background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(139,92,246,.08));
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.1rem; flex-shrink:0;
+    }
+    .s-value { font-size:.9rem; font-weight:700; color:var(--text); }
+    .s-label { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:.05rem; }
+
+    .qr-wrap { text-align:center; padding:.75rem 0 .25rem; }
+    .qr-label {
+      font-size:.72rem; text-transform:uppercase; letter-spacing:1.5px;
+      color:var(--muted); margin-bottom:.8rem;
+    }
+    .qr-wrap img {
+      width:155px; height:155px; border-radius:14px;
+      border:2px solid var(--border);
+      box-shadow:0 4px 20px rgba(99,102,241,.1);
+    }
+
+    /* Error */
+    .error-box {
+      background:rgba(239,68,68,.06); border:1px solid rgba(239,68,68,.2);
+      border-radius:14px; padding:1.1rem 1.25rem;
+      display:flex; align-items:center; gap:.75rem;
+      animation:fadeUp .4s ease both;
+    }
+    .error-box p { font-size:.9rem; color:#DC2626; }
+
+    /* Footer */
+    .footer {
+      margin-top:2.5rem; text-align:center;
+      font-size:.75rem; color:var(--muted);
+      animation:fadeUp .6s .35s ease both;
+    }
+    .footer strong {
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+    @keyframes spin     { to{transform:rotate(360deg)} }
+    @keyframes pulse    { 0%,100%{box-shadow:0 0 0 0 rgba(6,182,212,.5)} 50%{box-shadow:0 0 0 6px rgba(6,182,212,0)} }
+    @media(max-width:400px) { .container{padding:1.5rem 1rem 3rem} .pts-value{font-size:2.1rem} }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-box">
+        <div class="logo-icon">💥</div>
+        <span class="logo-text">BingBang<span class="logo-dot"></span></span>
+      </div>
+    </div>
+    <h1>Mis <span>Puntos</span></h1>
+    <p>Consulta tu balance de fidelidad</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('phone',this)">📱 Teléfono</button>
+    <button class="tab" onclick="switchTab('code',this)">🎫 Código BB</button>
+    <button class="tab" onclick="switchTab('id',this)">🪪 ID</button>
+  </div>
+
+  <div class="card">
+    <div class="panel active" id="panel-phone">
+      <div class="field-label">Número de teléfono</div>
+      <div class="input-wrap">
+        <span class="input-icon">📱</span>
+        <input type="text" id="phoneInput" placeholder="Ej: 8092224455" maxlength="15"/>
+      </div>
+    </div>
+    <div class="panel" id="panel-code">
+      <div class="field-label">Código BB</div>
+      <div class="input-wrap">
+        <span class="input-icon">🎫</span>
+        <input type="text" id="codeInput" placeholder="Ej: BB-000000" maxlength="20"/>
+      </div>
+    </div>
+    <div class="panel" id="panel-id">
+      <div class="field-label">ID de cliente</div>
+      <div class="input-wrap">
+        <span class="input-icon">🪪</span>
+        <input type="text" id="idInput" placeholder="Ej: 00100022445" maxlength="40"/>
+      </div>
+    </div>
+    <button class="btn" id="searchBtn" onclick="buscar()">
+      <span class="btn-text">✦ Consultar Puntos</span>
+      <div class="spinner"></div>
+    </button>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="footer">Powered by <strong>BingBang</strong> &mdash; Sistema de Fidelidad</div>
+</div>
+
+<script>
+  const WEBHOOK_URL = 'https://commented-getting-skip-blake.trycloudflare.com/webhook/consulta-puntos';
+  let activeTab = 'phone';
+
+  function switchTab(tab, el) {
+    activeTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+    document.getElementById('result').innerHTML = '';
+  }
+
+  document.querySelectorAll('input').forEach(el => {
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') buscar(); });
+  });
+
+  async function buscar() {
+    const vals = {
+      phone: document.getElementById('phoneInput').value.replace(/\D/g,'').trim(),
+      code:  document.getElementById('codeInput').value.trim().toUpperCase(),
+      id:    document.getElementById('idInput').value.trim()
+    };
+    const entrada = vals[activeTab === 'phone' ? 'phone' : activeTab === 'code' ? 'code' : 'id'];
+    if (!entrada) { showError('Por favor ingresa un valor para buscar.'); return; }
+
+    const btn = document.getElementById('searchBtn');
+    btn.classList.add('loading'); btn.disabled = true;
+    document.getElementById('phoneInput').value = '';
+    document.getElementById('codeInput').value  = '';
+    document.getElementById('idInput').value    = '';
+    setTimeout(() => { document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 700);
+    document.getElementById('result').innerHTML = '';
+
+    try {
+      const body = {};
+      if (activeTab === 'phone') body.telefono = entrada;
+      if (activeTab === 'code')  body.codigo   = entrada;
+      if (activeTab === 'id')    body.id        = entrada;
+
+      const res  = await fetch(WEBHOOK_URL, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (data.encontrado) showResult(data);
+      else showError(data.error || 'Cliente no encontrado. Verifica los datos.');
+    } catch(e) {
+      showError('Error de conexión. Intenta de nuevo más tarde.');
+    } finally {
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
+  }
+
+  function showResult(d) {
+    const primerIcono = activeTab === 'id' ? '🪪' : '🎫';
+    const primerLabel = 'BB o ID';
+    const primerValor = activeTab === 'id' ? d.id || d.codigo : d.codigo;
+
+    document.getElementById('result').innerHTML = `
+      <div class="result-card">
+        <div class="result-top">
+          <div class="result-badge">✦ Cliente BingBang</div>
+          <div class="result-name">${d.nombre}</div>
+          <div class="result-phone">📱 ${d.telefono}</div>
+        </div>
+        <div class="result-body">
+          <div class="points-block">
+            <div>
+              <div class="pts-label">Balance de puntos</div>
+              <div class="pts-value">${Number(d.puntos).toLocaleString('es-DO')}</div>
+              <div class="pts-unit">puntos acumulados</div>
+            </div>
+            <div class="points-icon">⭐</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-box">
+              <div class="stat-icon-wrap">${primerIcono}</div>
+              <div>
+                <div class="s-value">${primerValor}</div>
+                <div class="s-label">${primerLabel}</div>
+              </div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-icon-wrap">🏪</div>
+              <div>
+                <div class="s-value">${d.visitas || 0}</div>
+                <div class="s-label">Visitas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function showError(msg) {
+    document.getElementById('result').innerHTML = `
+      <div class="error-box"><p>⚠️ ${msg}</p></div>`;
+  }
+</script>
+</body>
+</html>
