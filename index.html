@@ -126,7 +126,7 @@
       position:absolute; left:1rem; top:50%;
       transform:translateY(-50%); font-size:1rem; pointer-events:none;
     }
-    input[type="text"] {
+    input[type="text"], input[type="tel"] {
       width:100%; padding:.85rem 1rem .85rem 2.7rem;
       background:var(--surface2); border:1.5px solid var(--border);
       border-radius:13px; color:var(--text);
@@ -274,9 +274,9 @@
       color:#fff; box-shadow:0 8px 24px var(--glow); transform:translateY(-2px);
       border-color:transparent;
     }
-    .refresh-inline:active { transform:translateY(0) rotate(180deg); }
-    .refresh-inline.spinning { animation:spinRef .45s ease both; }
-    @keyframes spinRef { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    .refresh-inline:active { transform:scale(.95); }
+    .refresh-inline.spinning { animation:shakeFlash .5s ease both; pointer-events:none; }
+    @keyframes shakeFlash { 0%{transform:translateX(0);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff} 15%{transform:translateX(-8px)} 30%{transform:translateX(8px);background:linear-gradient(135deg,#06B6D4,#6366F1);color:#fff} 45%{transform:translateX(-6px)} 60%{transform:translateX(6px);background:linear-gradient(135deg,#8B5CF6,#06B6D4);color:#fff} 75%{transform:translateX(-3px)} 90%{transform:translateX(3px)} 100%{transform:translateX(0);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff} }
     @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
     @keyframes spin     { to{transform:rotate(360deg)} }
@@ -309,7 +309,7 @@
       <div class="field-label">Número de teléfono</div>
       <div class="input-wrap">
         <span class="input-icon">📱</span>
-        <input type="text" id="phoneInput" placeholder="Ej: 8092224455" maxlength="15"/>
+        <input type="tel" id="phoneInput" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 8092224455" maxlength="15"/>
       </div>
     </div>
     <div class="panel" id="panel-code">
@@ -323,7 +323,7 @@
       <div class="field-label">ID de cliente</div>
       <div class="input-wrap">
         <span class="input-icon">🪪</span>
-        <input type="text" id="idInput" placeholder="Ej: 00100022445" maxlength="40"/>
+        <input type="tel" id="idInput" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 00100022445" maxlength="40"/>
       </div>
     </div>
     <button class="btn" id="searchBtn" onclick="buscar()">
@@ -438,7 +438,7 @@
   function refreshPage() {
     const btn = document.querySelector(".refresh-inline");
     btn.classList.add("spinning");
-    setTimeout(() => location.reload(), 400);
+    setTimeout(() => location.reload(), 600);
   }
 
   function showError(msg) {
