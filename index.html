@@ -259,24 +259,23 @@
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
 
-    .refresh-btn {
-      position:fixed; top:1.2rem; right:1.2rem; z-index:100;
-      width:42px; height:42px; border-radius:13px;
-      background:var(--surface);
-      border:1.5px solid var(--border);
+    .refresh-inline {
+      width:50%; margin:1.5rem auto 0; display:block;
+      padding:.75rem 1rem;
+      background:var(--surface); border:1.5px solid var(--border);
+      border-radius:13px; color:var(--accent1);
+      font-family:"Outfit",sans-serif; font-size:.88rem; font-weight:700;
+      cursor:pointer; letter-spacing:.3px;
       box-shadow:var(--shadow);
-      display:flex; align-items:center; justify-content:center;
-      cursor:pointer; font-size:1.1rem;
-      transition:transform .25s, box-shadow .25s, background .25s;
-      color:var(--accent1);
+      transition:transform .2s, box-shadow .2s, background .2s, color .2s;
     }
-    .refresh-btn:hover {
+    .refresh-inline:hover {
       background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      color:#fff; box-shadow:0 8px 24px var(--glow);
-      transform:rotate(30deg) scale(1.08); border-color:transparent;
+      color:#fff; box-shadow:0 8px 24px var(--glow); transform:translateY(-2px);
+      border-color:transparent;
     }
-    .refresh-btn:active { transform:rotate(180deg) scale(.95); }
-    .refresh-btn.spinning { animation:spinRef .5s ease both; }
+    .refresh-inline:active { transform:translateY(0) rotate(180deg); }
+    .refresh-inline.spinning { animation:spinRef .45s ease both; }
     @keyframes spinRef { from{transform:rotate(0)} to{transform:rotate(360deg)} }
     @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
@@ -287,7 +286,6 @@
 </head>
 <body>
 <div class="container">
-<button class="refresh-btn" onclick="refreshPage()" title="Refrescar página">↻</button>
 
   <div class="header">
     <div class="logo-wrap">
@@ -300,7 +298,6 @@
     <p>Consulta tu balance de fidelidad</p>
   </div>
 
-  <div class="footer">Powered by <strong>BingBang</strong> &mdash; Sistema de Fidelidad</div>
   <div class="tabs">
     <button class="tab active" onclick="switchTab('phone',this)">📱 Teléfono</button>
     <button class="tab" onclick="switchTab('code',this)">🎫 Código BB</button>
@@ -336,6 +333,9 @@
   </div>
 
   <div id="result"></div>
+
+  <button class="refresh-inline" onclick="refreshPage()" title="Refrescar página">↻ Refrescar</button>
+  <div class="footer">Powered by <strong>BingBang</strong> &mdash; Sistema de Fidelidad</div>
 
 </div>
 
@@ -436,7 +436,7 @@
   }
 
   function refreshPage() {
-    const btn = document.querySelector(".refresh-btn");
+    const btn = document.querySelector(".refresh-inline");
     btn.classList.add("spinning");
     setTimeout(() => location.reload(), 400);
   }
