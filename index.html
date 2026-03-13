@@ -3,445 +3,229 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BigBang — Mis Puntos</title>
+  <title>BingBang — Mis Puntos</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:        #F0F4FF;
-      --surface:   #FFFFFF;
-      --surface2:  #F7F9FF;
-      --border:    rgba(99,102,241,.13);
-      --accent1:   #6366F1;
-      --accent2:   #8B5CF6;
-      --accent3:   #A78BFA;
-      --teal:      #06B6D4;
-      --text:      #1E1B4B;
-      --muted:     rgba(30,27,75,.45);
-      --glow:      rgba(99,102,241,.2);
-      --shadow:    0 4px 24px rgba(99,102,241,.12);
+      --bg: #F0F4FF;
+      --surface: #FFFFFF;
+      --surface2: #F7F9FF;
+      --border: rgba(99,102,241,.13);
+      --accent1: #6366F1;
+      --accent2: #8B5CF6;
+      --teal: #06B6D4;
+      --text: #1E1B4B;
+      --muted: rgba(30,27,75,.45);
+      --glow: rgba(99,102,241,.2);
+      --shadow: 0 4px 24px rgba(99,102,241,.12);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      min-height:100vh;
-      background:var(--bg);
-      font-family:'Outfit',sans-serif;
-      color:var(--text);
-      overflow-x:hidden;
-    }
-    body::before {
-      content:''; position:fixed; inset:0;
-      background:
-        radial-gradient(ellipse 60% 50% at 10% 0%,   rgba(99,102,241,.08) 0%,transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 100%, rgba(139,92,246,.07) 0%,transparent 60%),
-        radial-gradient(ellipse 40% 30% at 80% 10%,  rgba(6,182,212,.06)  0%,transparent 50%);
-      pointer-events:none; z-index:0;
-    }
+    body { min-height:100vh; background:var(--bg); font-family:'Outfit',sans-serif; color:var(--text); overflow-x:hidden; }
+    
+    .container { position:relative; z-index:1; max-width:460px; margin:0 auto; padding:2.5rem 1.5rem 4rem; display:flex; flex-direction:column; align-items:center; }
 
-    .container {
-      position:relative; z-index:1;
-      max-width:460px; margin:0 auto;
-      padding:2.5rem 1.5rem 4rem;
-      min-height:100vh;
-      display:flex; flex-direction:column; align-items:center;
-    }
+    /* Header */
+    .header { text-align:center; margin-bottom:2rem; }
+    .logo-box { display:inline-flex; align-items:center; gap:.6rem; background:linear-gradient(135deg,var(--accent1),var(--accent2)); border-radius:18px; padding:.7rem 1.3rem; box-shadow:0 8px 32px var(--glow); }
+    .logo-text { font-family:'Syne',sans-serif; font-size:1.35rem; font-weight:800; color:#fff; }
+    .header h1 { font-family:'Syne',sans-serif; font-size:1.85rem; font-weight:800; margin-top:1rem; }
+    .header h1 span { background:linear-gradient(135deg,var(--accent1),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 
-    /* ── Header ── */
-    .header { text-align:center; margin-bottom:2rem; animation:fadeDown .6s ease both; }
-    .logo-wrap { margin:0 auto 1.2rem; }
-    .logo-box {
-      display:inline-flex; align-items:center; gap:.6rem;
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      border-radius:18px; padding:.7rem 1.3rem;
-      box-shadow:0 8px 32px var(--glow), 0 0 0 1px rgba(99,102,241,.2);
-    }
-    .logo-icon {
-      width:38px; height:38px; border-radius:10px;
-      background:rgba(255,255,255,.22);
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.3rem;
-    }
-    .logo-text {
-      font-family:'Syne',sans-serif;
-      font-size:1.35rem; font-weight:800;
-      color:#fff; letter-spacing:-.3px;
-    }
-    .logo-dot {
-      width:8px; height:8px; border-radius:50%;
-      background:var(--teal);
-      display:inline-block; margin-left:.3rem;
-      animation:pulse 2s infinite;
-    }
-    .header h1 {
-      font-family:'Syne',sans-serif; font-size:1.85rem; font-weight:800;
-      color:var(--text); margin-bottom:.35rem;
-    }
-    .header h1 span {
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-    .header p { font-size:.88rem; color:var(--muted); font-weight:400; }
+    /* Tabs */
+    .tabs { display:flex; gap:.4rem; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:.35rem; margin-bottom:1.2rem; width:100%; box-shadow:var(--shadow); }
+    .tab { flex:1; padding:.55rem .3rem; border:none; border-radius:12px; background:transparent; color:var(--muted); font-family:'Outfit',sans-serif; font-size:.82rem; font-weight:600; cursor:pointer; }
+    .tab.active { background:linear-gradient(135deg,var(--accent1),var(--accent2)); color:#fff; }
 
-    /* ── Tabs ── */
-    .tabs {
-      display:flex; gap:.4rem;
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:16px; padding:.35rem; margin-bottom:1.2rem; width:100%;
-      box-shadow:var(--shadow);
-      animation:fadeUp .6s .1s ease both;
-    }
-    .tab {
-      flex:1; padding:.55rem .3rem; border:none; border-radius:12px;
-      background:transparent; color:var(--muted);
-      font-family:'Outfit',sans-serif; font-size:.82rem; font-weight:600;
-      cursor:pointer; transition:all .22s;
-    }
-    .tab.active {
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      color:#fff; box-shadow:0 4px 14px var(--glow);
-    }
-
-    /* ── Card ── */
-    .card {
-      width:100%; background:var(--surface);
-      border:1px solid var(--border); border-radius:22px;
-      padding:1.75rem; box-shadow:var(--shadow);
-      animation:fadeUp .6s .15s ease both;
-    }
+    /* Form Card */
+    .card { width:100%; background:var(--surface); border:1px solid var(--border); border-radius:22px; padding:1.75rem; box-shadow:var(--shadow); }
     .panel { display:none; }
     .panel.active { display:block; }
-
-    .field-label {
-      font-size:.72rem; text-transform:uppercase;
-      letter-spacing:1.8px; color:var(--accent1);
-      font-weight:700; margin-bottom:.6rem;
-    }
+    .field-label { font-size:.72rem; text-transform:uppercase; letter-spacing:1.8px; color:var(--accent1); font-weight:700; margin-bottom:.6rem; }
     .input-wrap { position:relative; margin-bottom:1.3rem; }
-    .input-icon {
-      position:absolute; left:1rem; top:50%;
-      transform:translateY(-50%); font-size:1rem; pointer-events:none;
-    }
-    input[type="text"], input[type="tel"] {
-      width:100%; padding:.85rem 1rem .85rem 2.7rem;
-      background:var(--surface2); border:1.5px solid var(--border);
-      border-radius:13px; color:var(--text);
-      font-family:'Outfit',sans-serif; font-size:.95rem; font-weight:500;
-      outline:none; transition:border-color .2s,background .2s;
-    }
-    input:focus {
-      border-color:var(--accent1);
-      background:#fff;
-      box-shadow:0 0 0 3px rgba(99,102,241,.1);
-    }
+    input { width:100%; padding:.85rem 1rem .85rem 1rem; background:var(--surface2); border:1.5px solid var(--border); border-radius:13px; color:var(--text); font-family:'Outfit',sans-serif; outline:none; }
+    input:focus { border-color:var(--accent1); background:#fff; }
 
-    /* ── Button ── */
-    .btn {
-      width:100%; padding:.95rem;
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      border:none; border-radius:13px; color:#fff;
-      font-family:'Outfit',sans-serif; font-size:.95rem; font-weight:700;
-      cursor:pointer; letter-spacing:.3px;
-      transition:transform .18s,box-shadow .18s;
-      box-shadow:0 4px 20px var(--glow);
-    }
-    .btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px var(--glow); }
-    .btn:disabled { opacity:.55; cursor:not-allowed; transform:none; }
-    .btn .spinner {
-      display:none; width:18px; height:18px;
-      border:2.5px solid rgba(255,255,255,.35);
-      border-top-color:#fff; border-radius:50%;
-      animation:spin .7s linear infinite; margin:0 auto;
-    }
-    .btn.loading .btn-text { display:none; }
-    .btn.loading .spinner { display:block; }
+    /* Buttons */
+    .btn { width:100%; padding:.95rem; background:linear-gradient(135deg,var(--accent1),var(--accent2)); border:none; border-radius:13px; color:#fff; font-weight:700; cursor:pointer; transition: transform 0.2s; }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+    
+    .spinner { display:none; width:18px; height:18px; border:2.5px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; margin:0 auto; }
+    .loading .spinner { display:block; }
+    .loading .btn-text { display:none; }
 
-    /* ── Result ── */
+    /* Results */
     #result { width:100%; margin-top:1.5rem; }
-    .result-card {
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
-      animation:fadeUp .5s ease both;
-    }
-    .result-top {
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      padding:1.6rem;
-    }
-    .result-badge {
-      display:inline-flex; align-items:center; gap:.4rem;
-      background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.3);
-      border-radius:20px; padding:.25rem .85rem;
-      font-size:.7rem; color:#fff;
-      font-weight:700; letter-spacing:1px;
-      text-transform:uppercase; margin-bottom:.9rem;
-    }
-    .result-name {
-      font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:800;
-      color:#fff; line-height:1.1; margin-bottom:.3rem;
-    }
-    .result-phone { font-size:.85rem; color:rgba(255,255,255,.7); }
+    .result-card { background:var(--surface); border:1px solid var(--border); border-radius:22px; overflow:hidden; box-shadow:var(--shadow); animation: slideUp 0.4s ease-out; }
+    .result-top { background:linear-gradient(135deg,var(--accent1),var(--accent2)); padding:1.6rem; color:#fff; }
+    .result-name { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; }
     .result-body { padding:1.5rem; }
-
-    .points-block {
-      display:flex; align-items:center; justify-content:space-between;
-      background:linear-gradient(135deg,rgba(99,102,241,.06),rgba(139,92,246,.04));
-      border:1.5px solid var(--border); border-radius:16px;
-      padding:1.2rem 1.35rem; margin-bottom:1rem;
-    }
-    .pts-label { font-size:.7rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:.2rem; }
-    .pts-value {
-      font-family:'Syne',sans-serif; font-size:2.6rem; font-weight:800;
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1;
-    }
-    .pts-unit { font-size:.78rem; color:var(--muted); margin-top:.25rem; }
-    .points-icon {
-      width:52px; height:52px;
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      border-radius:16px; display:flex; align-items:center; justify-content:center;
-      font-size:1.5rem; box-shadow:0 4px 16px var(--glow);
-    }
-
+    
+    .points-block { display:flex; align-items:center; justify-content:space-between; background:rgba(99,102,241,.05); border-radius:16px; padding:1.2rem; margin-bottom:1rem; border: 1px solid var(--border); }
+    .pts-value { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; color:var(--accent1); }
+    
     .stats-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1.25rem; }
-    .stat-box {
-      background:var(--surface2); border:1px solid var(--border);
-      border-radius:14px; padding:.9rem;
-      display:flex; align-items:center; gap:.7rem;
-    }
-    .stat-icon-wrap {
-      width:38px; height:38px; border-radius:11px;
-      background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(139,92,246,.08));
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.1rem; flex-shrink:0;
-    }
-    .s-value { font-size:.9rem; font-weight:700; color:var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .s-label { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:.05rem; }
+    .stat-box { background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:.8rem; }
+    .s-value { font-size:.85rem; font-weight:700; display:block; overflow:hidden; text-overflow:ellipsis; }
+    .s-label { font-size:.65rem; color:var(--muted); text-transform:uppercase; }
 
-    /* ── QR Design ── */
-    .qr-container {
-      margin-top: 1.2rem;
-      padding-top: 1.5rem;
-      border-top: 1px dashed var(--border);
-      text-align: center;
-    }
-    .qr-label {
-      font-size: .65rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--muted);
-      margin-bottom: .8rem;
-      font-weight: 700;
-    }
-    .qr-frame {
-      display: inline-block;
-      padding: 12px;
-      background: #fff;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.08);
-      line-height: 0;
-    }
-    .qr-frame img {
-      width: 140px;
-      height: 140px;
-      border-radius: 12px;
-    }
+    /* QR Section */
+    .qr-container { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px dashed var(--border); text-align: center; }
+    .qr-frame { display: inline-block; padding: 12px; background: #fff; border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+    .qr-frame img { width: 140px; height: 140px; display: block; }
 
-    /* Error & Footer */
-    .error-box {
-      background:rgba(239,68,68,.06); border:1px solid rgba(239,68,68,.2);
-      border-radius:14px; padding:1.1rem 1.25rem;
-      display:flex; align-items:center; gap:.75rem;
-      animation:fadeUp .4s ease both;
-    }
-    .error-box p { font-size:.9rem; color:#DC2626; }
-    .footer {
-      margin-top:2.5rem; text-align:center;
-      font-size:.75rem; color:var(--muted);
-      animation:fadeUp .6s .35s ease both;
-    }
-    .footer strong {
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-    .refresh-inline {
-      width:140px; margin:1.5rem auto 0; display:block;
-      padding:.75rem; background:var(--surface); border:1.5px solid var(--border);
-      border-radius:13px; color:var(--accent1);
-      font-family:"Outfit",sans-serif; font-size:.85rem; font-weight:700;
-      cursor:pointer; box-shadow:var(--shadow); transition:all .2s;
-    }
-    .refresh-inline:hover { background:var(--accent1); color:#fff; transform:translateY(-2px); }
+    .error-box { background:#FFF5F5; border:1px solid #FED7D7; border-radius:12px; padding:1rem; color:#C53030; font-size:.9rem; }
 
-    @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
-    @keyframes spin     { to{transform:rotate(360deg)} }
-    @keyframes pulse    { 0%,100%{box-shadow:0 0 0 0 rgba(6,182,212,.5)} 50%{box-shadow:0 0 0 6px rgba(6,182,212,0)} }
-    @media(max-width:400px) { .container{padding:1.5rem 1rem 3rem} .pts-value{font-size:2.1rem} }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    @keyframes slideUp { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
   </style>
 </head>
 <body>
-<div class="container">
 
+<div class="container">
   <div class="header">
-    <div class="logo-wrap">
-      <div class="logo-box">
-        <div class="logo-icon">💥</div>
-        <span class="logo-text">BigBang<span class="logo-dot"></span></span>
-      </div>
-    </div>
+    <div class="logo-box"><span class="logo-text">BingBang</span></div>
     <h1>Mis <span>Puntos</span></h1>
-    <p>Consulta tu balance de fidelidad</p>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('phone',this)">📱 Teléfono</button>
-    <button class="tab" onclick="switchTab('code',this)">🎫 Código BB</button>
-    <button class="tab" onclick="switchTab('id',this)">🪪 ID</button>
+    <button class="tab active" onclick="switchTab('phone', this)">📱 Teléfono</button>
+    <button class="tab" onclick="switchTab('code', this)">🎫 Código BB</button>
+    <button class="tab" onclick="switchTab('id', this)">🪪 ID</button>
   </div>
 
   <div class="card">
-    <div class="panel active" id="panel-phone">
-      <div class="field-label">Número de teléfono</div>
-      <div class="input-wrap">
-        <span class="input-icon">📱</span>
-        <input type="tel" id="phoneInput" inputmode="numeric" placeholder="Ej: 8092224455" maxlength="15"/>
-      </div>
+    <div id="panel-phone" class="panel active">
+      <div class="field-label">Teléfono</div>
+      <input type="tel" id="phoneInput" placeholder="Ej: 8090000000">
     </div>
-    <div class="panel" id="panel-code">
+    <div id="panel-code" class="panel">
       <div class="field-label">Código BB</div>
-      <div class="input-wrap">
-        <span class="input-icon">🎫</span>
-        <input type="text" id="codeInput" placeholder="Ej: BB-000000" maxlength="20"/>
-      </div>
+      <input type="text" id="codeInput" placeholder="Ej: BB-12345">
     </div>
-    <div class="panel" id="panel-id">
-      <div class="field-label">ID de cliente</div>
-      <div class="input-wrap">
-        <span class="input-icon">🪪</span>
-        <input type="tel" id="idInput" inputmode="numeric" placeholder="Ej: 00100022445" maxlength="40"/>
-      </div>
+    <div id="panel-id" class="panel">
+      <div class="field-label">ID Cliente</div>
+      <input type="text" id="idInput" placeholder="Ej: 001002003">
     </div>
     <button class="btn" id="searchBtn" onclick="buscar()">
-      <span class="btn-text">✦ Consultar Puntos</span>
+      <span class="btn-text">Consultar Puntos</span>
       <div class="spinner"></div>
     </button>
   </div>
 
   <div id="result"></div>
-
-  <button class="refresh-inline" onclick="location.reload()">↻ Refrescar</button>
-  <div class="footer">Powered by <strong>BigBang</strong> &mdash; Sistema de Fidelidad</div>
-
 </div>
 
 <script>
   const WEBHOOK_URL = 'https://bingbangrd.duckdns.org/webhook/consulta-puntos';
-  let activeTab = 'phone';
+  let currentTab = 'phone';
 
-  function switchTab(tab, el) {
-    activeTab = tab;
+  function switchTab(tab, btn) {
+    currentTab = tab;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    el.classList.add('active');
+    btn.classList.add('active');
     document.getElementById('panel-' + tab).classList.add('active');
     document.getElementById('result').innerHTML = '';
   }
 
-  document.querySelectorAll('input').forEach(el => {
-    el.addEventListener('keydown', e => { if (e.key === 'Enter') buscar(); });
-  });
-
   async function buscar() {
-    const vals = {
-      phone: document.getElementById('phoneInput').value.replace(/\D/g,'').trim(),
-      code:  document.getElementById('codeInput').value.trim().toUpperCase(),
-      id:    document.getElementById('idInput').value.trim()
-    };
-    const entrada = vals[activeTab === 'phone' ? 'phone' : activeTab === 'code' ? 'code' : 'id'];
-    if (!entrada) { showError('Por favor ingresa un valor para buscar.'); return; }
-
     const btn = document.getElementById('searchBtn');
-    btn.classList.add('loading'); btn.disabled = true;
+    const resultDiv = document.getElementById('result');
     
-    try {
-      const body = {};
-      if (activeTab === 'phone') body.telefono = entrada;
-      if (activeTab === 'code')  body.codigo   = entrada;
-      if (activeTab === 'id')    body.id        = entrada;
+    // Obtener valores
+    const valPhone = document.getElementById('phoneInput').value.trim();
+    const valCode = document.getElementById('codeInput').value.trim();
+    const valId = document.getElementById('idInput').value.trim();
+    
+    let queryValue = '';
+    let payload = {};
 
-      const res  = await fetch(WEBHOOK_URL, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(body)
+    if(currentTab === 'phone') { queryValue = valPhone; payload.telefono = valPhone; }
+    else if(currentTab === 'code') { queryValue = valCode; payload.codigo = valCode; }
+    else { queryValue = valId; payload.id = valId; }
+
+    if(!queryValue) return alert("Ingresa un dato para buscar");
+
+    // UI Loading
+    btn.classList.add('loading');
+    btn.disabled = true;
+    resultDiv.innerHTML = '';
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
       });
-      const data = await res.json();
-      if (data.encontrado) showResult(data);
-      else showError(data.error || 'Cliente no encontrado. Verifica los datos.');
-    } catch(e) {
-      showError('Error de conexión. Intenta de nuevo más tarde.');
+
+      if (!response.ok) throw new Error('Error en servidor');
+      
+      const data = await response.json();
+
+      if (data.encontrado || data.nombre) {
+        showResult(data);
+      } else {
+        resultDiv.innerHTML = `<div class="error-box">No se encontró ningún cliente con ese dato.</div>`;
+      }
+    } catch (err) {
+      resultDiv.innerHTML = `<div class="error-box">Error de conexión. Intenta de nuevo.</div>`;
     } finally {
-      btn.classList.remove('loading'); btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.disabled = false;
     }
   }
 
   function showResult(d) {
-    const primerIcono = activeTab === 'id' ? '🪪' : '🎫';
-    const primerLabel = activeTab === 'id' ? 'ID Cliente' : 'Código BB';
-    // Priorizamos el código/ID que el servidor devuelva
-    const valorParaQR = activeTab === 'id' ? (d.id || d.codigo) : (d.codigo || d.id);
+    // Detectar qué dato usar para el QR (ID o Código)
+    const identificador = d.codigo || d.id || "Sin ID";
+    const labelID = d.codigo ? 'Código BB' : 'ID Cliente';
     
-    // Generación del QR vía Google Charts API
-    const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=${encodeURIComponent(valorParaQR)}&chld=M|1`;
+    // Normalizar puntos (por si vienen como string o nombre diferente)
+    const puntos = d.puntos || d.balance || d.puntos_acumulados || 0;
+    
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(identificador)}`;
 
     document.getElementById('result').innerHTML = `
       <div class="result-card">
         <div class="result-top">
-          <div class="result-badge">✦ Cliente BigBang</div>
-          <div class="result-name">${d.nombre}</div>
-          <div class="result-phone">📱 ${d.telefono}</div>
+          <div style="font-size:0.7rem; text-transform:uppercase; opacity:0.8">Fidelidad BingBang</div>
+          <div class="result-name">${d.nombre || 'Cliente'}</div>
+          <div style="font-size:0.85rem">📱 ${d.telefono || ''}</div>
         </div>
         <div class="result-body">
           <div class="points-block">
             <div>
-              <div class="pts-label">Balance de puntos</div>
-              <div class="pts-value">${Number(d.puntos).toLocaleString('es-DO')}</div>
-              <div class="pts-unit">puntos acumulados</div>
+              <div class="s-label">Balance Total</div>
+              <div class="pts-value">${Number(puntos).toLocaleString()}</div>
             </div>
-            <div class="points-icon">⭐</div>
+            <div style="font-size:1.5rem">⭐</div>
           </div>
           
           <div class="stats-row">
             <div class="stat-box">
-              <div class="stat-icon-wrap">${primerIcono}</div>
-              <div>
-                <div class="s-value">${valorParaQR}</div>
-                <div class="s-label">${primerLabel}</div>
-              </div>
+              <span class="s-label">${labelID}</span>
+              <span class="s-value">${identificador}</span>
             </div>
             <div class="stat-box">
-              <div class="stat-icon-wrap">🏪</div>
-              <div>
-                <div class="s-value">${d.visitas || 0}</div>
-                <div class="s-label">Visitas</div>
-              </div>
+              <span class="s-label">Visitas</span>
+              <span class="s-value">${d.visitas || 0}</span>
             </div>
           </div>
 
           <div class="qr-container">
-            <div class="qr-label">Presenta este código en caja</div>
+            <div class="s-label" style="margin-bottom:0.5rem">Escanea en Caja</div>
             <div class="qr-frame">
-              <img src="${qrUrl}" alt="QR de Cliente" />
+              <img src="${qrUrl}" alt="QR">
             </div>
           </div>
         </div>
-      </div>`;
+      </div>
+    `;
     
-    setTimeout(() => { document.getElementById('result').scrollIntoView({ behavior: 'smooth' }); }, 300);
-  }
-
-  function showError(msg) {
-    document.getElementById('result').innerHTML = `
-      <div class="error-box"><p>⚠️ ${msg}</p></div>`;
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 </script>
+
 </body>
 </html>
