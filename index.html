@@ -357,7 +357,6 @@
   function showResult(d) {
     const primerIcono = activeTab === 'id' ? '🪪' : '🎫';
     const primerLabel = activeTab === 'id' ? 'ID Cliente' : 'Código BB';
-    // Identificador para el QR (usamos el que venga disponible)
     const valorIdentificador = d.codigo || d.id || "000";
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(valorIdentificador)}&bgcolor=FFFFFF&color=1E1B4B`;
 
@@ -394,7 +393,7 @@
             </div>
           </div>
           <div class="qr-wrap">
-            <div class="qr-label">Presenta para canjear</div>
+            <div class="qr-label">Este es tu (QR) de Cliente</div>
             <div class="qr-frame">
               <img src="${qrUrl}" alt="QR">
             </div>
