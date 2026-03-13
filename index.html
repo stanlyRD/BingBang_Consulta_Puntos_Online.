@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BingBang — Mis Puntos</title>
+  <title>BigBang — Mis Puntos</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -47,36 +47,30 @@
 
     /* ── Header ── */
     .header { text-align:center; margin-bottom:2rem; animation:fadeDown .6s ease both; }
-
     .logo-wrap { margin:0 auto 1.2rem; }
-
     .logo-box {
       display:inline-flex; align-items:center; gap:.6rem;
       background:linear-gradient(135deg,var(--accent1),var(--accent2));
       border-radius:18px; padding:.7rem 1.3rem;
       box-shadow:0 8px 32px var(--glow), 0 0 0 1px rgba(99,102,241,.2);
     }
-
     .logo-icon {
       width:38px; height:38px; border-radius:10px;
       background:rgba(255,255,255,.22);
       display:flex; align-items:center; justify-content:center;
       font-size:1.3rem;
     }
-
     .logo-text {
       font-family:'Syne',sans-serif;
       font-size:1.35rem; font-weight:800;
       color:#fff; letter-spacing:-.3px;
     }
-
     .logo-dot {
       width:8px; height:8px; border-radius:50%;
       background:var(--teal);
       display:inline-block; margin-left:.3rem;
       animation:pulse 2s infinite;
     }
-
     .header h1 {
       font-family:'Syne',sans-serif; font-size:1.85rem; font-weight:800;
       color:var(--text); margin-bottom:.35rem;
@@ -133,7 +127,6 @@
       font-family:'Outfit',sans-serif; font-size:.95rem; font-weight:500;
       outline:none; transition:border-color .2s,background .2s;
     }
-    input::placeholder { color:rgba(30,27,75,.22); }
     input:focus {
       border-color:var(--accent1);
       background:#fff;
@@ -151,7 +144,6 @@
       box-shadow:0 4px 20px var(--glow);
     }
     .btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px var(--glow); }
-    .btn:active { transform:translateY(0); }
     .btn:disabled { opacity:.55; cursor:not-allowed; transform:none; }
     .btn .spinner {
       display:none; width:18px; height:18px;
@@ -164,18 +156,15 @@
 
     /* ── Result ── */
     #result { width:100%; margin-top:1.5rem; }
-
     .result-card {
       background:var(--surface); border:1px solid var(--border);
       border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
       animation:fadeUp .5s ease both;
     }
-
     .result-top {
       background:linear-gradient(135deg,var(--accent1),var(--accent2));
       padding:1.6rem;
     }
-
     .result-badge {
       display:inline-flex; align-items:center; gap:.4rem;
       background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.3);
@@ -184,13 +173,11 @@
       font-weight:700; letter-spacing:1px;
       text-transform:uppercase; margin-bottom:.9rem;
     }
-
     .result-name {
       font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:800;
       color:#fff; line-height:1.1; margin-bottom:.3rem;
     }
     .result-phone { font-size:.85rem; color:rgba(255,255,255,.7); }
-
     .result-body { padding:1.5rem; }
 
     .points-block {
@@ -225,21 +212,40 @@
       display:flex; align-items:center; justify-content:center;
       font-size:1.1rem; flex-shrink:0;
     }
-    .s-value { font-size:.9rem; font-weight:700; color:var(--text); }
+    .s-value { font-size:.9rem; font-weight:700; color:var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .s-label { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:.05rem; }
 
-    .qr-wrap { text-align:center; padding:.75rem 0 .25rem; }
-    .qr-label {
-      font-size:.72rem; text-transform:uppercase; letter-spacing:1.5px;
-      color:var(--muted); margin-bottom:.8rem;
+    /* ── QR Design ── */
+    .qr-container {
+      margin-top: 1.2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--border);
+      text-align: center;
     }
-    .qr-wrap img {
-      width:155px; height:155px; border-radius:14px;
-      border:2px solid var(--border);
-      box-shadow:0 4px 20px rgba(99,102,241,.1);
+    .qr-label {
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: .8rem;
+      font-weight: 700;
+    }
+    .qr-frame {
+      display: inline-block;
+      padding: 12px;
+      background: #fff;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.08);
+      line-height: 0;
+    }
+    .qr-frame img {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
     }
 
-    /* Error */
+    /* Error & Footer */
     .error-box {
       background:rgba(239,68,68,.06); border:1px solid rgba(239,68,68,.2);
       border-radius:14px; padding:1.1rem 1.25rem;
@@ -247,8 +253,6 @@
       animation:fadeUp .4s ease both;
     }
     .error-box p { font-size:.9rem; color:#DC2626; }
-
-    /* Footer */
     .footer {
       margin-top:2.5rem; text-align:center;
       font-size:.75rem; color:var(--muted);
@@ -258,25 +262,15 @@
       background:linear-gradient(135deg,var(--accent1),var(--accent2));
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
-
     .refresh-inline {
-      width:50%; margin:1.5rem auto 0; display:block;
-      padding:.75rem 1rem;
-      background:var(--surface); border:1.5px solid var(--border);
+      width:140px; margin:1.5rem auto 0; display:block;
+      padding:.75rem; background:var(--surface); border:1.5px solid var(--border);
       border-radius:13px; color:var(--accent1);
-      font-family:"Outfit",sans-serif; font-size:.88rem; font-weight:700;
-      cursor:pointer; letter-spacing:.3px;
-      box-shadow:var(--shadow);
-      transition:transform .2s, box-shadow .2s, background .2s, color .2s;
+      font-family:"Outfit",sans-serif; font-size:.85rem; font-weight:700;
+      cursor:pointer; box-shadow:var(--shadow); transition:all .2s;
     }
-    .refresh-inline:hover {
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      color:#fff; box-shadow:0 8px 24px var(--glow); transform:translateY(-2px);
-      border-color:transparent;
-    }
-    .refresh-inline:active { transform:scale(.95); }
-    .refresh-inline.spinning { animation:shakeFlash .5s ease both; pointer-events:none; }
-    @keyframes shakeFlash { 0%{transform:translateX(0);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff} 15%{transform:translateX(-8px)} 30%{transform:translateX(8px);background:linear-gradient(135deg,#06B6D4,#6366F1);color:#fff} 45%{transform:translateX(-6px)} 60%{transform:translateX(6px);background:linear-gradient(135deg,#8B5CF6,#06B6D4);color:#fff} 75%{transform:translateX(-3px)} 90%{transform:translateX(3px)} 100%{transform:translateX(0);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff} }
+    .refresh-inline:hover { background:var(--accent1); color:#fff; transform:translateY(-2px); }
+
     @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
     @keyframes spin     { to{transform:rotate(360deg)} }
@@ -291,7 +285,7 @@
     <div class="logo-wrap">
       <div class="logo-box">
         <div class="logo-icon">💥</div>
-        <span class="logo-text">BingBang<span class="logo-dot"></span></span>
+        <span class="logo-text">BigBang<span class="logo-dot"></span></span>
       </div>
     </div>
     <h1>Mis <span>Puntos</span></h1>
@@ -309,7 +303,7 @@
       <div class="field-label">Número de teléfono</div>
       <div class="input-wrap">
         <span class="input-icon">📱</span>
-        <input type="tel" id="phoneInput" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 8092224455" maxlength="15"/>
+        <input type="tel" id="phoneInput" inputmode="numeric" placeholder="Ej: 8092224455" maxlength="15"/>
       </div>
     </div>
     <div class="panel" id="panel-code">
@@ -323,7 +317,7 @@
       <div class="field-label">ID de cliente</div>
       <div class="input-wrap">
         <span class="input-icon">🪪</span>
-        <input type="tel" id="idInput" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 00100022445" maxlength="40"/>
+        <input type="tel" id="idInput" inputmode="numeric" placeholder="Ej: 00100022445" maxlength="40"/>
       </div>
     </div>
     <button class="btn" id="searchBtn" onclick="buscar()">
@@ -334,13 +328,13 @@
 
   <div id="result"></div>
 
-  <button class="refresh-inline" onclick="refreshPage()" title="Refrescar página">↻ Refrescar</button>
-  <div class="footer">Powered by <strong>BingBang</strong> &mdash; Sistema de Fidelidad</div>
+  <button class="refresh-inline" onclick="location.reload()">↻ Refrescar</button>
+  <div class="footer">Powered by <strong>BigBang</strong> &mdash; Sistema de Fidelidad</div>
 
 </div>
 
 <script>
-  const WEBHOOK_URL = 'https://bingbangrd.duckdns.org/webhook/consulta-puntos';
+  const WEBHOOK_URL = 'https://bigbangrd.duckdns.org/webhook/consulta-puntos';
   let activeTab = 'phone';
 
   function switchTab(tab, el) {
@@ -367,12 +361,7 @@
 
     const btn = document.getElementById('searchBtn');
     btn.classList.add('loading'); btn.disabled = true;
-    document.getElementById('phoneInput').value = '';
-    document.getElementById('codeInput').value  = '';
-    document.getElementById('idInput').value    = '';
-    setTimeout(() => { document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 700);
-    document.getElementById('result').innerHTML = '';
-
+    
     try {
       const body = {};
       if (activeTab === 'phone') body.telefono = entrada;
@@ -396,13 +385,17 @@
 
   function showResult(d) {
     const primerIcono = activeTab === 'id' ? '🪪' : '🎫';
-    const primerLabel = 'BB o ID';
-    const primerValor = activeTab === 'id' ? d.id || d.codigo : d.codigo;
+    const primerLabel = activeTab === 'id' ? 'ID Cliente' : 'Código BB';
+    // Priorizamos el código/ID que el servidor devuelva
+    const valorParaQR = activeTab === 'id' ? (d.id || d.codigo) : (d.codigo || d.id);
+    
+    // Generación del QR vía Google Charts API
+    const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=${encodeURIComponent(valorParaQR)}&chld=M|1`;
 
     document.getElementById('result').innerHTML = `
       <div class="result-card">
         <div class="result-top">
-          <div class="result-badge">✦ Cliente BingBang</div>
+          <div class="result-badge">✦ Cliente BigBang</div>
           <div class="result-name">${d.nombre}</div>
           <div class="result-phone">📱 ${d.telefono}</div>
         </div>
@@ -415,11 +408,12 @@
             </div>
             <div class="points-icon">⭐</div>
           </div>
+          
           <div class="stats-row">
             <div class="stat-box">
               <div class="stat-icon-wrap">${primerIcono}</div>
               <div>
-                <div class="s-value">${primerValor}</div>
+                <div class="s-value">${valorParaQR}</div>
                 <div class="s-label">${primerLabel}</div>
               </div>
             </div>
@@ -431,14 +425,17 @@
               </div>
             </div>
           </div>
+
+          <div class="qr-container">
+            <div class="qr-label">Presenta este código en caja</div>
+            <div class="qr-frame">
+              <img src="${qrUrl}" alt="QR de Cliente" />
+            </div>
+          </div>
         </div>
       </div>`;
-  }
-
-  function refreshPage() {
-    const btn = document.querySelector(".refresh-inline");
-    btn.classList.add("spinning");
-    setTimeout(() => location.reload(), 600);
+    
+    setTimeout(() => { document.getElementById('result').scrollIntoView({ behavior: 'smooth' }); }, 300);
   }
 
   function showError(msg) {
