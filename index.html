@@ -506,13 +506,34 @@
   }
 
   function showResult(d) {
-    const hasId      = d.id      && String(d.id).trim()     !== '';
-    const hasCodigo  = d.codigo  && String(d.codigo).trim() !== '';
-    const hasVisitas = d.visitas !== undefined && d.visitas  !== null;
+    const hasVisitas = d.visitas !== undefined && d.visitas !== null;
 
+    // Classify each value: BB code = starts with "BB-", otherwise = ID
+    function classify(val) {
+      if (!val || String(val).trim() === '') return null;
+      const v = String(val).trim();
+      const isBB = /^BB-/i.test(v);
+      return {
+        icon: isBB ? '🎫' : '🪪',
+        key:  isBB ? 'Código BB' : 'ID',
+        val:  v,
+        cls:  isBB ? 'codigo' : 'id'
+      };
+    }
+
+    // Collect all possible identifier fields from the API response
+    const rawFields = [d.id, d.codigo, d.codigo_bb, d.bb].filter(Boolean);
+    const seen = new Set();
     const metaItems = [];
-    if (hasId)     metaItems.push({ icon:'🪪', key:'ID Cliente', val:d.id,     cls:'id' });
-    if (hasCodigo) metaItems.push({ icon:'🎫', key:'Código BB',  val:d.codigo, cls:'codigo' });
+    for (const raw of rawFields) {
+      const item = classify(raw);
+      if (item && !seen.has(item.val)) {
+        seen.add(item.val);
+        metaItems.push(item);
+        if (metaItems.length === 2) break;
+      }
+    }
+
     if (hasVisitas && metaItems.length < 2)
       metaItems.push({ icon:'🏪', key:'Visitas', val:d.visitas, cls:'visitas' });
     if (metaItems.length === 0 && hasVisitas)
