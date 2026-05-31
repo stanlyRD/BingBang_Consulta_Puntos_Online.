@@ -17,6 +17,8 @@
   --text: #e8e0f4;
   --muted: rgba(255,255,255,0.55);
 }
+ 
+ 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: var(--bg);
@@ -264,19 +266,19 @@ body {
 .refresh-wrap { margin-top:56px; display:flex; justify-content:center; width:100%; max-width:580px; }
 .refresh-btn {
   display:inline-flex; align-items:center; gap:12px;
-  background:linear-gradient(135deg,#00e5ff,#0070cc);
-  border:2.5px solid rgba(120,220,255,0.75); color:#ffffff;
+  background:linear-gradient(135deg,rgba(0,229,255,0.5),rgba(0,112,204,0.5));
+  border:2.5px solid rgba(120,220,255,0.45); color:#ffffff;
   font-family:'Nunito',sans-serif; font-size:15px; font-weight:900;
   text-transform:uppercase; letter-spacing:3px;
   padding:14px 40px; border-radius:50px; cursor:pointer;
   transition:all 0.25s ease; position:relative; overflow:hidden;
-  box-shadow:0 0 28px rgba(0,200,255,0.45),0 6px 20px rgba(0,0,0,0.35);
+  box-shadow:0 0 18px rgba(0,200,255,0.25),0 6px 20px rgba(0,0,0,0.2);
   text-shadow:0 1px 6px rgba(0,0,0,0.35);
 }
 .refresh-btn::before { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent); transition:left 0.45s ease; }
 .refresh-btn:hover::before { left:150%; }
 .refresh-btn:hover {
-  background:linear-gradient(135deg,#38d4ff,#0095e0);
+  background:linear-gradient(135deg,rgba(56,212,255,0.6),rgba(0,149,224,0.6));
   border-color:rgba(150,235,255,0.9);
   box-shadow:0 0 42px rgba(0,220,255,0.6),0 0 80px rgba(0,180,255,0.2),0 8px 24px rgba(0,0,0,0.4);
   transform:translateY(-3px);
@@ -306,6 +308,10 @@ body {
   .main-card{padding:48px 48px 44px;}
   .card-logo{width:160px;}
 }
+ 
+.mode-icon { font-size: 16px; line-height: 1; }
+ 
+ 
 </style>
 </head>
 <body>
@@ -314,6 +320,7 @@ body {
 <div class="nebula n2"></div>
 <div class="nebula n3"></div>
 <canvas id="cosmos-canvas"></canvas>
+ 
  
 <div class="page">
   <div class="main-card">
@@ -513,8 +520,10 @@ function initials(name){
   return p.length>=2?(p[0][0]+p[1][0]).toUpperCase():p[0].substring(0,2).toUpperCase();
 }
 function fmtDate(iso){
-  if(!iso)return'No registrado';
-  try{return new Date(iso).toLocaleDateString('es-DO',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return iso;}
+  if(!iso||iso==='null'||iso==='undefined'||iso===null)return'No registrado';
+  // If n8n already formatted it (e.g. "18 mar 2026"), return as-is
+  if(typeof iso==='string'&&iso.length<20&&isNaN(Date.parse(iso)))return iso;
+  try{return new Date(iso).toLocaleDateString('es-DO',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return String(iso);}
 }
 function fmtPts(n){return(parseInt(n)||0).toLocaleString('es-DO');}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -612,6 +621,8 @@ function resetForm(){
   clearResult();
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')consultarPuntos();});
+ 
+ 
 </script>
 </body>
 </html>
